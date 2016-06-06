@@ -51,114 +51,111 @@
 	var ReactDOM = __webpack_require__(158);
 
 	var Note = React.createClass({
-		displayName: 'Note',
+	    displayName: 'Note',
 
-
-		getInitialState: function getInitialState() {
-			return { editing: false };
-		},
-
-		edit: function edit() {
-			this.setState({ editing: true });
-		},
-
-		save: function save() {
-			this.props.onChange(this.refs.newText.getDOMNode().value, this.props.index);
-			this.setState({ editing: false });
-		},
-
-		remove: function remove() {
-			this.props.onRemove(this.props.index);
-		},
-
-		renderDisplay: function renderDisplay() {
-			return React.createElement(
-				'div',
-				{ className: 'note' },
-				React.createElement(
-					'p',
-					null,
-					this.props.children
-				),
-				React.createElement(
-					'span',
-					null,
-					React.createElement('button', { onClick: this.edit, className: 'btn btn-primary glyphicon glyphicon-pencil' }),
-					React.createElement('button', { onClick: this.remove, className: 'btn btn-danger glyphicon glyphicon-trash' })
-				)
-			);
-		},
-
-		renderForm: function renderForm() {
-			return React.createElement(
-				'div',
-				{ className: 'note' },
-				React.createElement('textarea', { ref: 'newText', defaultValue: this.props.children, className: 'form-control' }),
-				React.createElement('button', { onClick: this.save, className: 'btn btn-success btn-sm glyphicon glyphicon-floppy-disk' })
-			);
-		},
-
-		render: function render() {
-			if (this.state.editing) {
-				return this.renderForm();
-			} else {
-				return this.renderDisplay();
-			}
-		}
+	    getInitialState: function getInitialState() {
+	        return { editing: false };
+	    },
+	    edit: function edit() {
+	        this.setState({ editing: true });
+	    },
+	    save: function save() {
+	        this.props.onChange(this.refs.newText.getDOMNode().value, this.props.index);
+	        this.setState({ editing: false });
+	    },
+	    remove: function remove() {
+	        this.props.onRemove(this.props.index);
+	    },
+	    renderDisplay: function renderDisplay() {
+	        return React.createElement(
+	            'div',
+	            { className: 'note' },
+	            React.createElement(
+	                'p',
+	                null,
+	                this.props.children
+	            ),
+	            React.createElement(
+	                'span',
+	                null,
+	                React.createElement('button', { onClick: this.edit,
+	                    className: 'btn btn-primary glyphicon glyphicon-pencil' }),
+	                React.createElement('button', { onClick: this.remove,
+	                    className: 'btn btn-danger glyphicon glyphicon-trash' })
+	            )
+	        );
+	    },
+	    renderForm: function renderForm() {
+	        return React.createElement(
+	            'div',
+	            { className: 'note' },
+	            React.createElement('textarea', { ref: 'newText', defaultValue: this.props.children,
+	                className: 'form-control' }),
+	            React.createElement('button', { onClick: this.save, className: 'btn btn-success btn-sm glyphicon glyphicon-floppy-disk' })
+	        );
+	    },
+	    render: function render() {
+	        if (this.state.editing) {
+	            return this.renderForm();
+	        } else {
+	            return this.renderDisplay();
+	        }
+	    }
 	});
 
 	var Board = React.createClass({
-		displayName: 'Board',
+	    displayName: 'Board',
 
-
-		propTypes: {
-			count: function count(props, propName) {
-				if (typeof props[propName] !== "numer") {
-					return new Error('The count property must be a number');
-				}
-				if (props[prop.Name] > 100) {
-					return new Error("Creating" + props[propName] + "notes is ridiculous");
-				}
-			}
-		},
-
-		getInitialState: function getInitialState() {
-			return {
-				notes: ['Call Bill', 'Email John', 'Shopping', 'Send Resume']
-			};
-		},
-
-		update: function update(newText, i) {
-			var arr = this.state.notes;
-			arr[i] = newText;
-			this.setState({ notes: arr });
-		},
-
-		remove: function remove(i) {
-			var arr = this.state.notes;
-			arr.splice(i, 1);
-			this.setState({ notes: arr });
-		},
-
-		eachNote: function eachNote(note, i) {
-			return React.createElement(
-				Note,
-				{ key: i,
-					index: i,
-					onChange: this.update,
-					onRemove: this.remove
-				},
-				note
-			);
-		},
-
-		render: function render() {
-			return React.createElement(
-				'div',
-				{ className: 'board' },
-				this.state.notes.map(this.eachNote)
-			);
-		}
+	    propTypes: {
+	        count: function count(props, propName) {
+	            if (typeof props[propName] !== "number") {
+	                return new Error('The count property must be a number');
+	            }
+	            if (props[propName] > 100) {
+	                return new Error("Creating " + props[propName] + " notes is ridiculous");
+	            }
+	        }
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            notes: []
+	        };
+	    },
+	    add: function add(text) {
+	        var arr = this.state.notes;
+	        arr.push(text);
+	        this.setState({ notes: arr });
+	    },
+	    update: function update(newText, i) {
+	        var arr = this.state.notes;
+	        arr[i] = newText;
+	        this.setState({ notes: arr });
+	    },
+	    remove: function remove(i) {
+	        var arr = this.state.notes;
+	        arr.splice(i, 1);
+	        this.setState({ notes: arr });
+	    },
+	    eachNote: function eachNote(note, i) {
+	        return React.createElement(
+	            Note,
+	            { key: i,
+	                index: i,
+	                onChange: this.update,
+	                onRemove: this.remove
+	            },
+	            note
+	        );
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'board' },
+	            this.state.notes.map(this.eachNote),
+	            React.createElement('button', { className: 'btn btn-sm btn-success glyphicon glyphicon-plus',
+	                onClick: this.add.bind(null, "New Note") })
+	        );
+	    }
 	});
 
 	ReactDOM.render(React.createElement(Board, { count: 10 }), document.getElementById('react-container'));
