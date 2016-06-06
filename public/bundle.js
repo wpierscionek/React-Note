@@ -63,13 +63,12 @@
 		},
 
 		save: function save() {
-			var val = this.refs.newText.getDOMNode().value;
-			alert("Saved");
+			this.props.onChange(this.refs.newText.getDOMNode().value, this.props.index);
 			this.setState({ editing: false });
 		},
 
 		remove: function remove() {
-			alert('removing note');
+			this.props.onRemove(this.props.index);
 		},
 
 		renderDisplay: function renderDisplay() {
@@ -129,17 +128,35 @@
 			};
 		},
 
+		update: function update(newText, i) {
+			var arr = this.state.notes;
+			arr[i] = newText;
+			this.setState({ notes: arr });
+		},
+
+		remove: function remove(i) {
+			var arr = this.state.notes;
+			arr.splice(i, 1);
+			this.setState({ notes: arr });
+		},
+
+		eachNote: function eachNote(note, i) {
+			return React.createElement(
+				Note,
+				{ key: i,
+					index: i,
+					onChange: this.update,
+					onRemove: this.remove
+				},
+				note
+			);
+		},
+
 		render: function render() {
 			return React.createElement(
 				'div',
 				{ className: 'board' },
-				this.state.notes.map(function (note, i) {
-					return React.createElement(
-						Note,
-						{ key: i },
-						note
-					);
-				})
+				this.state.notes.map(this.eachNote)
 			);
 		}
 	});
