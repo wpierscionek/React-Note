@@ -1,0 +1,4 @@
+node_modules/.bin/webpack
+
+
+webpack -w dosnt work
