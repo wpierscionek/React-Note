@@ -63,6 +63,8 @@
 		},
 
 		save: function save() {
+			var val = this.refs.newText.getDOMNode().value;
+			alert("Saved");
 			this.setState({ editing: false });
 		},
 
@@ -92,7 +94,7 @@
 			return React.createElement(
 				'div',
 				{ className: 'note' },
-				React.createElement('textarea', { defaultValue: this.props.children, className: 'form-control' }),
+				React.createElement('textarea', { ref: 'newText', defaultValue: this.props.children, className: 'form-control' }),
 				React.createElement('button', { onClick: this.save, className: 'btn btn-success btn-sm glyphicon glyphicon-floppy-disk' })
 			);
 		},
@@ -106,11 +108,31 @@
 		}
 	});
 
-	ReactDOM.render(React.createElement(
-		Note,
-		null,
-		'Hello World'
-	), document.getElementById('react-container'));
+	var Board = React.createClass({
+		displayName: 'Board',
+
+
+		propTypes: {
+			count: function count(props, propName) {
+				if (typeof props[propName] !== "numer") {
+					return new Error('The count property must be a number');
+				}
+				if (props[prop.Name] > 100) {
+					return new Error("Creating" + props[propName] + "notes is ridiculous");
+				}
+			}
+		},
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'board' },
+				this.props.count
+			);
+		}
+	});
+
+	ReactDOM.render(React.createElement(Board, { count: 10 }), document.getElementById('react-container'));
 
 /***/ },
 /* 1 */
