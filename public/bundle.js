@@ -123,11 +123,23 @@
 			}
 		},
 
+		getInitialState: function getInitialState() {
+			return {
+				notes: ['Call Bill', 'Email John', 'Shopping', 'Send Resume']
+			};
+		},
+
 		render: function render() {
 			return React.createElement(
 				'div',
 				{ className: 'board' },
-				this.props.count
+				this.state.notes.map(function (note, i) {
+					return React.createElement(
+						Note,
+						{ key: i },
+						note
+					);
+				})
 			);
 		}
 	});
