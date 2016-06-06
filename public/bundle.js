@@ -56,6 +56,16 @@
 	    getInitialState: function getInitialState() {
 	        return { editing: false };
 	    },
+	    componentWillMount: function componentWillMount() {
+	        this.style = {
+	            right: this.randomBetween(0, window.innerWidth - 150) + 'px',
+	            top: this.randomBetween(0, innerHeight - 150) + 'px',
+	            transform: 'rotate(' + this.randomBetween(-15, 15) + 'deg)'
+	        };
+	    },
+	    randomBetween: function randomBetween(min, max) {
+	        return min + Math.ceil(Math.random() * max);
+	    },
 	    edit: function edit() {
 	        this.setState({ editing: true });
 	    },
@@ -69,7 +79,8 @@
 	    renderDisplay: function renderDisplay() {
 	        return React.createElement(
 	            'div',
-	            { className: 'note' },
+	            { className: 'note',
+	                style: this.style },
 	            React.createElement(
 	                'p',
 	                null,
@@ -88,7 +99,8 @@
 	    renderForm: function renderForm() {
 	        return React.createElement(
 	            'div',
-	            { className: 'note' },
+	            { className: 'note',
+	                style: this.style },
 	            React.createElement('textarea', { ref: 'newText', defaultValue: this.props.children,
 	                className: 'form-control' }),
 	            React.createElement('button', { onClick: this.save, className: 'btn btn-success btn-sm glyphicon glyphicon-floppy-disk' })
@@ -121,14 +133,21 @@
 	            notes: []
 	        };
 	    },
+	    nextId: function nextId() {
+	        this.uniqueId = this.uniqueId || 0;
+	        return this.uniqueId++;
+	    },
 	    add: function add(text) {
 	        var arr = this.state.notes;
-	        arr.push(text);
+	        arr.push({
+	            id: this.nextId(),
+	            note: text
+	        });
 	        this.setState({ notes: arr });
 	    },
 	    update: function update(newText, i) {
 	        var arr = this.state.notes;
-	        arr[i] = newText;
+	        arr[i].note = newText;
 	        this.setState({ notes: arr });
 	    },
 	    remove: function remove(i) {
@@ -139,12 +158,12 @@
 	    eachNote: function eachNote(note, i) {
 	        return React.createElement(
 	            Note,
-	            { key: i,
+	            { key: note.id,
 	                index: i,
 	                onChange: this.update,
 	                onRemove: this.remove
 	            },
-	            note
+	            note.note
 	        );
 	    },
 	    render: function render() {

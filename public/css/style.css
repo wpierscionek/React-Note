@@ -5,7 +5,7 @@ html,
 div.board,
 div#react-container {
     height: 100%;
-    overflow: hidden;
+    overflow: visible;
 }
 
 body {
@@ -32,7 +32,7 @@ div.note {
     width: 150px;
     background-color: yellow;
     margin: 2px 0;
-    position: relative;
+    position: absolute;
     cursor: -webkit-grab;
     -webkit-box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, .2);
     box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, .2);
@@ -73,4 +73,7 @@ div.note > textarea {
     position: fixed;
     top: 10px;
     right: 10px;
+}
+footer{
+    width: 300px;
 }
