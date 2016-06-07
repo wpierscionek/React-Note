@@ -5,7 +5,7 @@ html,
 div.board,
 div#react-container {
     height: 100%;
-    overflow: visible;
+    overflow: hidden;
 }
 
 body {
@@ -74,6 +74,8 @@ div.note > textarea {
     top: 10px;
     right: 10px;
 }
-footer{
-    width: 300px;
+.col-md-2 {
+    color: white;
+    position: absolute;
+    bottom: 0;
 }
