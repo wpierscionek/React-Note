@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ahmed Haque",
+  "author": "Wojciech Pierscionek",
   "license": "ISC",
   "dependencies": {
     "react": "^0.14.3",
