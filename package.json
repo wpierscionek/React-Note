@@ -9,6 +9,7 @@
   "author": "Wojciech Pierscionek",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.13.4",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "webpack": "^1.13.1"
