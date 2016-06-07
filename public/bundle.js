@@ -63,6 +63,9 @@
 	            transform: 'rotate(' + this.randomBetween(-15, 15) + 'deg)'
 	        };
 	    },
+	    componentDidMount: function componentDidMount() {
+	        $(this.getDOMNode()).draggable();
+	    },
 	    randomBetween: function randomBetween(min, max) {
 	        return min + Math.ceil(Math.random() * max);
 	    },
@@ -137,6 +140,16 @@
 	        this.uniqueId = this.uniqueId || 0;
 	        return this.uniqueId++;
 	    },
+	    componentWillMount: function componentWillMount() {
+	        var self = this;
+	        if (this.props.count) {
+	            $.getJSON("http://baconipsum.com/api/?type=all-meat&sentences=" + this.props.count + "&start-with-lorem=1&callback=?", function (results) {
+	                results[0].split(". ").forEach(function (sentence) {
+	                    self.add(sentence.substring(0, 40));
+	                });
+	            });
+	        }
+	    },
 	    add: function add(text) {
 	        var arr = this.state.notes;
 	        arr.push({
@@ -177,7 +190,7 @@
 	    }
 	});
 
-	ReactDOM.render(React.createElement(Board, { count: 10 }), document.getElementById('react-container'));
+	ReactDOM.render(React.createElement(Board, { count: 50 }), document.getElementById('react-container'));
 
 /***/ },
 /* 1 */
